@@ -7,11 +7,11 @@
       
 
         <div class="w1170">
-            <div class="article-wrap">
-            <div class="article-item">
+            <div class="article-wrap ">
+            <router-link to='#' class="article-item">
                 <div class="article-msg clearfix" >
                     <div class="row1">
-                        <div class="avatar fll" >
+                        <div class="avatar fll " >
                             <img src="http://pbl.yaojunrong.com/avatar1.jpg">
                         </div>
                         <div class="author-msg">
@@ -41,7 +41,7 @@
                 <div class="article-content">
                     销量第一的悬疑小说，被翻拍成多部电影。
                 </div>
-            </div>
+            </router-link>
         </div>
         </div>
     </div>
@@ -72,6 +72,9 @@ export default {
     }
 
     .article-wrap .article-item{
+        display: block;
+        text-decoration: none;
+        color: #333;
         padding: 24px;
         background: #fff;
 
@@ -90,6 +93,15 @@ export default {
         }
         .row1{
             line-height: 24px;
+        }
+        .row2{
+            width: 605px;
+            background: #bbb;
+            color: #555;
+            border-radius: 4px;
+            padding: 6px;
+            margin-left: 70px;
+            margin-top: 5px;
         }
         .author-name{
             font-size: 18px;

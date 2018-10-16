@@ -1,18 +1,18 @@
 <template>
     <div class="user-box flr">
         <div class="input-wrap mb30">
-            <input type="text" class="input" placeholder="邮箱" v-model="formData.username">
+            <input type="text" class="input" placeholder="邮箱" v-model="formData.email">
         </div>
         <div class="input-wrap mb30">
-            <input type="password" class="input" placeholder="密码" v-model="formData.password">
+            <input type="password" class="input" placeholder="密码" v-model="formData.password" @keyup.enter="handleLogin">
         </div>
         <div class="btn-wrap mb30">
-            <el-button type="primary">
+            <el-button type="primary" @click="handleLogin">
                 登录
             </el-button>
         </div>
         <div class="btn-wrap mb30">
-            <el-button>
+            <el-button @click="$router.push('/register')">
                 注册
             </el-button>
         </div>
@@ -24,10 +24,29 @@ export default {
     data(){
         return{
             formData:{
-                username:'',
+                email:'',
                 password:'',
 
             }
+        }
+    },
+    methods:{
+        handleLogin(){
+            console.log(this.$axios)
+            this.$axios.post('/login',this.formData).then(res=>{
+                console.log(res);
+                
+                       if(res.code == 200){
+                    this.$message.success(res.msg)
+                    setTimeout(()=>{
+                        this.$store.commit('CHANGE_userInfo', res.userDate)
+                    },500)
+                }else{
+                    this.$message.error(res.msg)
+                }
+     
+               
+            })
         }
     }
 }
