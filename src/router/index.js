@@ -11,6 +11,7 @@ const components = {
   index: () => import('@/views/index/index'),
   register:() =>import('@/views/register/index'),
   writeNote:() =>import('@/views/writeNote/index'),
+  article:() =>import('@/views/article/index'),
 }
 
 const router = new Router({
@@ -42,6 +43,14 @@ const router = new Router({
           },
           component:components.writeNote 
         },
+        {
+          path:'article/:id',
+          name:'article',
+          meta:{
+            title:'文章详情'
+          },
+          component:components.article 
+        }
       ]
     }
   ]

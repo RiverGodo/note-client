@@ -7,7 +7,7 @@
                 </router-link>
             </div>
             <div class="btn-wrap flr">
-                <el-button @click="$router.push('/writeNote')">
+                <el-button  @click="$router.push('/writeNote')">
                     写笔记
                 </el-button>
             </div>
@@ -16,7 +16,10 @@
 </template>
 
 <script>
-export default {};
+
+export default {
+
+};
 </script>
 
 <style scoped lang="scss">

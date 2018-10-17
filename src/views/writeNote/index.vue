@@ -14,12 +14,16 @@
             v-model="formData.content"
             ref="myQuillEditor"
             :options="editorOption"
+            @change="handleChange"
             >
             </quill-editor>
-            <div class="strong">
-                分类:
+            <div class="strong clearfix">
+                 <span class="fll">分类:</span>
+                <div class="fll" style="margin-left:20px">
+                    <dyRadios :options='categories' v-model="formData.category"></dyRadios>
+                </div>
             </div>
-            <el-button type="primary">
+            <el-button type="primary" @click="handleSubmit">
                 发布笔记
             </el-button>
         </div>
@@ -28,19 +32,24 @@
 
 <script>
   import 'quill/dist/quill.snow.css'
+  import 'quill/dist/quill.bubble.css'
   import {quillEditor, Quill} from 'vue-quill-editor'
   import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
+  import dyRadios from '@/components/Radios'
 
   Quill.register('modules/ImageExtend', ImageExtend)
 export default {
-    components: {quillEditor},
+    components: {quillEditor,dyRadios},
    data() {
       return {
           formData:{
             content: '',
             title:'',
+            contentText:'',
+            category:''
 
           },
+          categories:[],
         // 富文本框参数设置
         editorOption: {  
           modules: {
@@ -64,7 +73,34 @@ export default {
         },
         
       }
-    }
+    },
+    methods:{
+        handleChange({ quill, html, text }){
+            console.log(text);
+            this.formData.contentText = text
+            this.formData.contentText = this.formData.contentText.substring(0,200) + '...'
+        },
+        getCategory(){
+            this.$axios.get('/category').then(res=>{
+                this.categories = res.data
+            })
+        },
+        handleSubmit(){
+            this.$axios.post('/article',this.formData).then(res=>{
+                if(res.code == 200){
+                    this.$message.success(res.msg)
+                    this.$router.push('/index')
+                }else if(res.code == 403){
+                        this.$router.push('/index')
+                         this.$message.error(res.msg)
+                }
+            })
+        }
+    
+    },
+        created() {
+            this.getCategory()
+        }
 }
 </script>
 

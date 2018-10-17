@@ -8,37 +8,37 @@
 
         <div class="w1170">
             <div class="article-wrap ">
-            <router-link to='#' class="article-item">
+            <router-link  class="article-item" :to="{name:'article',params:{id:item._id}}" v-for="(item, index) in content" :key="index">
                 <div class="article-msg clearfix" >
                     <div class="row1">
                         <div class="avatar fll " >
-                            <img src="http://pbl.yaojunrong.com/avatar1.jpg">
+                            <img :src="item.author.avatar">
                         </div>
                         <div class="author-msg">
-                            <span class="author-name">
+                            <span class="author-name" v-text="item.author.username"> 
                                 东野圭吾
                             </span>
                             <span class="divide">
                                 |
                             </span>
-                            <span class="article-title">
+                            <span class="article-title" v-text="item.title">
                                 嫌疑人X的献身
                             </span>
                         </div>
                     </div>
                     <div class="row2">
-                        <span class="strong">
-                            浏览：998
+                        <span class="strong" >
+                            浏览：<span v-text="item.readnumber">998</span> 
                         </span>
                         <span class="strong">
-                            回复：2
+                            回复： <span v-text="item.commonnum">2</span>
                         </span>
-                        <span class="strong">
-                            分类：悬疑小说
+                        <span class="strong" >
+                            分类： <span v-text="item.category.name">悬疑小说</span>
                         </span>
                     </div>
                 </div>
-                <div class="article-content">
+                <div class="article-content" v-text="item.contentText">
                     销量第一的悬疑小说，被翻拍成多部电影。
                 </div>
             </router-link>
@@ -51,9 +51,24 @@
 import Banner from '@/components/Banner'
 import UserBox from '@/components/UserBox'
 export default {
+    data(){
+        return{
+            content:[]
+        }
+    },
     components:{
         Banner,
         UserBox
+    },
+    methods:{
+        getData(){
+            this.$axios.get('/article').then(res=>{
+                this.content = res.data
+            })
+        }
+    },
+    created(){
+        this.getData()
     }
 }
 </script>

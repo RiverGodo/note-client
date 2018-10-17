@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Vue from 'vue'
 
 
 const env = process.env.NODE_ENV//在生产环境中，将会被设置成production
